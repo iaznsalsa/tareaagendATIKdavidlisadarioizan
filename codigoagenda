@@ -53,3 +53,31 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# --- Menú de usuario ---
+
+from contactos import añadir_contacto, mostrar_contactos, buscar_contacto, eliminar_contacto
+
+def mostrar_menu():
+	while True:
+    	print("\n AGENDA DE CONTACTOS ")
+    	print("1. Añadir contacto")
+    	print("2. Mostrar contactos")
+    	print("3. Buscar contacto")
+    	print("4. Eliminar contacto")
+    	print("5. Salir")
+    	opcion = input("Elige una opción: ")
+
+    	if opcion == '1':
+        	añadir_contacto()
+    	elif opcion == '2':
+        	mostrar_contactos()
+    	elif opcion == '3':
+        	buscar_contacto()
+    	elif opcion == '4':
+        	eliminar_contacto()
+    	elif opcion == '5':
+        	print("Saliendo...")
+        	break
+    	else:
+        	print(" Opción no válida.")
