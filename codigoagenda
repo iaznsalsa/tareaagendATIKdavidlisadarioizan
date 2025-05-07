@@ -1,0 +1,96 @@
+import csv
+import os
+
+ARCHIVO = 'agenda.csv'
+
+# --- Gestión del archivo ---
+def inicializar_archivo():
+    if not os.path.exists(ARCHIVO):
+        with open(ARCHIVO, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(['Nombre', 'Teléfono', 'Email'])
+
+def leer_contactos():
+    with open(ARCHIVO, 'r') as f:
+        reader = csv.DictReader(f)
+        return list(reader)
+
+def escribir_contacto(nombre, telefono, email):
+    with open(ARCHIVO, 'a', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow([nombre, telefono, email])
+
+def sobreescribir_contactos(contactos):
+    with open(ARCHIVO, 'w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=['Nombre', 'Teléfono', 'Email'])
+        writer.writeheader()
+        writer.writerows(contactos)
+
+# --- Operaciones con contactos ---
+def añadir_contacto():
+    nombre = input("Nombre: ")
+    telefono = input("Teléfono: ")
+    email = input("Email: ")
+    escribir_contacto(nombre, telefono, email)
+    print("Contacto añadido.")
+
+def mostrar_contactos():
+    contactos = leer_contactos()
+    if contactos:
+        for c in contactos:
+            print(f"{c['Nombre']} - {c['Teléfono']} - {c['Email']}")
+    else:
+        print("No hay contactos aún.")
+
+def buscar_contacto():
+    nombre = input("Nombre a buscar: ")
+    encontrados = [c for c in leer_contactos() if nombre.lower() in c['Nombre'].lower()]
+    if encontrados:
+        for c in encontrados:
+            print(f"{c['Nombre']} - {c['Teléfono']} - {c['Email']}")
+    else:
+        print("No se encontró el contacto.")
+
+def eliminar_contacto():
+    nombre = input("Nombre del contacto a eliminar: ")
+    contactos = leer_contactos()
+    nuevos = [c for c in contactos if c['Nombre'].lower() != nombre.lower()]
+    if len(nuevos) < len(contactos):
+        sobreescribir_contactos(nuevos)
+        print("Contacto eliminado.")
+    else:
+        print(" Contacto no encontrado.")
+
+# --- Menú del programa ---
+def mostrar_menu():
+    while True:
+        print("\n AGENDA DE CONTACTOS ")
+        print("1. Añadir contacto")
+        print("2. Mostrar contactos")
+        print("3. Buscar contacto")
+        print("4. Eliminar contacto")
+        print("5. Salir")
+        opcion = input("Elige una opción: ")
+
+        if opcion == '1':
+            añadir_contacto()
+        elif opcion == '2':
+            mostrar_contactos()
+        elif opcion == '3':
+            buscar_contacto()
+        elif opcion == '4':
+            eliminar_contacto()
+        elif opcion == '5':
+            print("Saliendo...")
+            break
+        else:
+            print("Opción no válida.")
+
+# --- Programa principal ---
+def main():
+    inicializar_archivo()
+    mostrar_menu()
+
+if __name__ == "__main__":
+    main()
+
