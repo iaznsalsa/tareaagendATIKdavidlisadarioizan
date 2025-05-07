@@ -45,12 +45,13 @@ def sobreescribir_contactos(contactos):
 
     	writer.writerows(contactos)
 
+# --- Operaciones con contactos ---
 def añadir_contacto():
 	nombre = input("Nombre: ")
 	telefono = input("Teléfono: ")
 	email = input("Email: ")
 	escribir_contacto(nombre, telefono, email)
-	print("✅ Contacto añadido.")
+	print("Contacto añadido.")
 
 def mostrar_contactos():
 	contactos = leer_contactos()
@@ -64,7 +65,7 @@ def buscar_contacto():
     	for c in encontrados:
         	print(f"{c['Nombre']} - {c['Teléfono']} - {c['Email']}")
 	else:
-    	print("❌ No se encontró el contacto.")
+    	print("No se encontró el contacto.")
 
 def eliminar_contacto():
 	nombre = input("Nombre del contacto a eliminar: ")
@@ -72,22 +73,11 @@ def eliminar_contacto():
 	nuevos = [c for c in contactos if c['Nombre'].lower() != nombre.lower()]
 	if len(nuevos) < len(contactos):
     	sobreescribir_contactos(nuevos)
-    	print("🗑️ Contacto eliminado.")
+    	print("Contacto eliminado.")
 	else:
-    	print("❌ Contacto no encontrado.")
+    	print("Contacto no encontrado.")
 
-# --- Programa principal ---
-def main():
-    inicializar_archivo()
-    mostrar_menu()
-
-if __name__ == "__main__":
-    main()
-
-# --- Menú de usuario ---
-
-from contactos import añadir_contacto, mostrar_contactos, buscar_contacto, eliminar_contacto
-
+# --- Menú del programa ---
 def mostrar_menu():
 	while True:
     	print("\n AGENDA DE CONTACTOS ")
@@ -111,3 +101,11 @@ def mostrar_menu():
         	break
     	else:
         	print(" Opción no válida.")
+
+# --- Programa principal ---
+def main():
+    inicializar_archivo()
+    mostrar_menu()
+
+if __name__ == "__main__":
+    main()
