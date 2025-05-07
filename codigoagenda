@@ -1,3 +1,51 @@
+import csv
+
+import os
+
+
+ARCHIVO = 'agenda.csv'
+
+
+def inicializar_archivo():
+
+	if not os.path.exists(ARCHIVO):
+
+    	with open(ARCHIVO, 'w', newline='') as f:
+
+        	writer = csv.writer(f)
+
+        	writer.writerow(['Nombre', 'Teléfono', 'Email'])
+
+
+def leer_contactos():
+
+	with open(ARCHIVO, 'r') as f:
+
+    	reader = csv.DictReader(f)
+
+    	return list(reader)
+
+
+def escribir_contacto(nombre, telefono, email):
+
+	with open(ARCHIVO, 'a', newline='') as f:
+
+    	writer = csv.writer(f)
+
+    	writer.writerow([nombre, telefono, email])
+
+
+def sobreescribir_contactos(contactos):
+
+	with open(ARCHIVO, 'w', newline='') as f:
+
+    	writer = csv.DictWriter(f, fieldnames=['Nombre', 'Teléfono', 'Email'])
+
+    	writer.writeheader()
+
+    	writer.writerows(contactos)
+
+
 # --- Programa principal ---
 def main():
     inicializar_archivo()
