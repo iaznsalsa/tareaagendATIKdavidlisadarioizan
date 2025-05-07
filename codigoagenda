@@ -1,49 +1,30 @@
 import csv
-
 import os
-
 
 ARCHIVO = 'agenda.csv'
 
-
+# --- Gestión del archivo ---
 def inicializar_archivo():
-
 	if not os.path.exists(ARCHIVO):
-
-    	with open(ARCHIVO, 'w', newline='') as f:
-
-        	writer = csv.writer(f)
-
-        	writer.writerow(['Nombre', 'Teléfono', 'Email'])
-
+    	with open(ARCHIVO, 'w', newline='') as f:
+        	writer = csv.writer(f)
+        	writer.writerow(['Nombre', 'Teléfono', 'Email'])
 
 def leer_contactos():
-
 	with open(ARCHIVO, 'r') as f:
-
-    	reader = csv.DictReader(f)
-
-    	return list(reader)
-
+    	reader = csv.DictReader(f)
+    	return list(reader)
 
 def escribir_contacto(nombre, telefono, email):
-
 	with open(ARCHIVO, 'a', newline='') as f:
-
-    	writer = csv.writer(f)
-
-    	writer.writerow([nombre, telefono, email])
-
+    	writer = csv.writer(f)
+    	writer.writerow([nombre, telefono, email])
 
 def sobreescribir_contactos(contactos):
-
 	with open(ARCHIVO, 'w', newline='') as f:
-
-    	writer = csv.DictWriter(f, fieldnames=['Nombre', 'Teléfono', 'Email'])
-
-    	writer.writeheader()
-
-    	writer.writerows(contactos)
+    	writer = csv.DictWriter(f, fieldnames=['Nombre', 'Teléfono', 'Email'])
+    	writer.writeheader()
+    	writer.writerows(contactos)
 
 # --- Operaciones con contactos ---
 def añadir_contacto():
@@ -55,8 +36,11 @@ def añadir_contacto():
 
 def mostrar_contactos():
 	contactos = leer_contactos()
-	for c in contactos:
-    	print(f"{c['Nombre']} - {c['Teléfono']} - {c['Email']}")
+	if contactos:
+    	for c in contactos:
+        	print(f"{c['Nombre']} - {c['Teléfono']} - {c['Email']}")
+	else:
+    	print("No hay contactos aún.")
 
 def buscar_contacto():
 	nombre = input("Nombre a buscar: ")
@@ -75,7 +59,7 @@ def eliminar_contacto():
     	sobreescribir_contactos(nuevos)
     	print("Contacto eliminado.")
 	else:
-    	print("Contacto no encontrado.")
+    	print(" Contacto no encontrado.")
 
 # --- Menú del programa ---
 def mostrar_menu():
@@ -100,12 +84,12 @@ def mostrar_menu():
         	print("Saliendo...")
         	break
     	else:
-        	print(" Opción no válida.")
+        	print("Opción no válida.")
 
 # --- Programa principal ---
 def main():
-    inicializar_archivo()
-    mostrar_menu()
+	inicializar_archivo()
+	mostrar_menu()
 
 if __name__ == "__main__":
-    main()
+	main()
